@@ -1,0 +1,66 @@
+<div class="container">
+  <h2 class="text-center">Stock List</h2>
+
+  <!-- Add Stock Button -->
+  <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addStockModal">Add Stock</button>
+
+  <!-- Error message display -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Search bar -->
+  <div class="form-group mb-3">
+    <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search by make, model, etc." />
+    <button class="btn btn-primary mt-2" (click)="searchStocks()">Search</button>
+  </div>
+
+  <!-- Stock list -->
+  <div *ngFor="let stock of stocks" class="card mb-3" style="max-width: 600px; margin: auto;">
+    <!-- Display the first image if available -->
+    <img class="card-img-top" [src]="stock.images[0]" alt="Vehicle image" *ngIf="stock.images.length > 0" style="height: 300px; object-fit: cover;"/>
+    <div class="card-body">
+      <h5 class="card-title text-center">{{ stock.make }} {{ stock.model }}</h5>
+      <p class="card-text text-center">Price: {{ stock.retailPrice }}</p>
+      <p class="card-text text-center">Year: {{ stock.modelYear }}</p>
+      
+      <!-- Separate View and Edit buttons -->
+      <div class="d-flex justify-content-center">
+        <a [routerLink]="['/stock-detail', stock.id]" class="btn btn-info mx-2">View Details</a>
+        <a [routerLink]="['/edit-stock', stock.id]" class="btn btn-warning mx-2">Edit Stock</a>
+        <button *ngIf="stock.id" (click)="deleteStock(stock.id!)" class="btn btn-danger mx-2">Delete</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pagination controls -->
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" href="#" (click)="goToPage(currentPage - 1)">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="currentPage === i + 1">
+        <a class="page-link" href="#" (click)="goToPage(i + 1)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" href="#" (click)="goToPage(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- Add Stock Modal -->
+<div class="modal fade" id="addStockModal" tabindex="-1" aria-labelledby="addStockModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title custom-center" id="addStockModalLabel">Add New Stock</h2>
+        <hr>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-add-stock (stockAdded)="onStockAdded()"></app-add-stock>
+      </div>
+    </div>
+  </div>
+</div>

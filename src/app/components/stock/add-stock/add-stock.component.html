@@ -1,0 +1,52 @@
+<div class="container">
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="stockForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="make">Make</label>
+      <input type="text" id="make" formControlName="make" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="model">Model</label>
+      <input type="text" id="model" formControlName="model" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="modelYear">Model Year</label>
+      <input type="number" id="modelYear" formControlName="modelYear" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="retailPrice">Retail Price</label>
+      <input type="number" id="retailPrice" formControlName="retailPrice" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="regNo">Registration Number</label>
+      <input type="text" id="regNo" formControlName="regNo" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="kms">Kilometers</label>
+      <input type="number" id="kms" formControlName="kms" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="color">Color</label>
+      <input type="text" id="color" formControlName="color" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="vin">VIN</label>
+      <input type="text" id="vin" formControlName="vin" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="costPrice">Cost Price</label>
+      <input type="number" id="costPrice" formControlName="costPrice" class="form-control" />
+    </div>    
+    <div class="form-group">
+      <label for="images">Images</label>
+      <input type="file" id="images" (change)="onFileChange($event)" multiple class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="stockForm.invalid">Add Stock</button>
+    <!-- Hidden button to close the modal programmatically -->
+  <button #closeModal type="button" class="d-none" data-bs-dismiss="modal">Disappear</button>
+  </form>
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+  <h2 class="text-center my-4">Stock Details</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!errorMessage">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="regNo">Registration Number</label>
+          <p class="form-control-static">{{ stockForm.get('regNo')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="make">Make</label>
+          <p class="form-control-static">{{ stockForm.get('make')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="model">Model</label>
+          <p class="form-control-static">{{ stockForm.get('model')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="modelYear">Model Year</label>
+          <p class="form-control-static">{{ stockForm.get('modelYear')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="kms">Kilometers</label>
+          <p class="form-control-static">{{ stockForm.get('kms')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="color">Color</label>
+          <p class="form-control-static">{{ stockForm.get('color')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="vin">VIN</label>
+          <p class="form-control-static">{{ stockForm.get('vin')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="retailPrice">Retail Price</label>
+          <p class="form-control-static">{{ stockForm.get('retailPrice')?.value }}</p>
+        </div>
+        <div class="form-group">
+          <label for="costPrice">Cost Price</label>
+          <p class="form-control-static">{{ stockForm.get('costPrice')?.value }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="existing-images">
+          <div *ngFor="let image of existingImages" class="img-thumbnail">
+            <img [src]="image" alt="Vehicle image" class="img-fluid mb-2" style="max-width: 100%; max-height: 200px; object-fit: cover;" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Stock List</button>
+    </div>
+  </div>
+</div>
