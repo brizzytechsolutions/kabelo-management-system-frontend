@@ -57,7 +57,7 @@ export class DetailStockComponent implements OnInit {
           retailPrice: stock.retailPrice,
           costPrice: stock.costPrice,
         });
-        this.existingImages = stock.images || [];
+        this.existingImages = stock.images ? stock.images.map(imagePath => `http://localhost:3000${imagePath}`) : [];
         this.errorMessage = '';
       },
       error: (error) => {
@@ -68,6 +68,7 @@ export class DetailStockComponent implements OnInit {
       }
     });
   }
+  
 
   goBack(): void {
     this.router.navigate(['/stock-list']);

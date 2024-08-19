@@ -33,7 +33,7 @@ export class ListStockComponent implements OnInit {
         if (data && data.items) {
           this.stocks = data.items.map(item => ({
             ...item,
-            images: item.images ? item.images.map(imagePath => imagePath) : []
+            images: item.images ? item.images.map(imagePath => `http://localhost:3000${imagePath}`) : [] // Prepend server URL
           }));
         } else {
           this.stocks = [];
@@ -54,7 +54,8 @@ export class ListStockComponent implements OnInit {
         console.info('Stock list loading completed');
       }
     });
-  }  
+  }
+  
 
   searchStocks(): void {
     if (this.searchTerm.length > 2) {

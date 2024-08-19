@@ -7,10 +7,9 @@
 
   <form [formGroup]="stockForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <!-- Existing Images at the Top -->
-    <div class="existing-images mb-4 text-center" *ngIf="existingImages.length > 0">
-      <h4>Existing Images</h4>
-      <div *ngFor="let image of existingImages" class="img-thumbnail d-inline-block m-2">
-        <img [src]="image" alt="Vehicle image" class="img-fluid" style="max-width: 150px; max-height: 150px; object-fit: cover;" />
+    <div class="existing-images mb-4">
+      <div *ngFor="let image of existingImages" class="img-thumbnail">
+        <img [src]="image" alt="Vehicle image" class="img-fluid" />
         <div class="d-grid gap-2">
           <button type="button" class="btn btn-danger mt-2" (click)="deleteImage(image)">Delete</button>
         </div>
@@ -18,72 +17,45 @@
     </div>
 
     <!-- Stock Information Form Fields -->
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="regNo">Registration Number</label>
-      <input type="text" id="regNo" formControlName="regNo" class="form-control" [class.is-invalid]="stockForm.get('regNo')?.invalid && stockForm.get('regNo')?.touched"/>
-      <div *ngIf="stockForm.get('regNo')?.invalid && stockForm.get('regNo')?.touched" class="invalid-feedback">
-        Registration number is required.
-      </div>
+      <input type="text" id="regNo" formControlName="regNo" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="make">Make</label>
-      <input type="text" id="make" formControlName="make" class="form-control" [class.is-invalid]="stockForm.get('make')?.invalid && stockForm.get('make')?.touched"/>
-      <div *ngIf="stockForm.get('make')?.invalid && stockForm.get('make')?.touched" class="invalid-feedback">
-        Make is required.
-      </div>
+      <input type="text" id="make" formControlName="make" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="model">Model</label>
-      <input type="text" id="model" formControlName="model" class="form-control" [class.is-invalid]="stockForm.get('model')?.invalid && stockForm.get('model')?.touched"/>
-      <div *ngIf="stockForm.get('model')?.invalid && stockForm.get('model')?.touched" class="invalid-feedback">
-        Model is required.
-      </div>
+      <input type="text" id="model" formControlName="model" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="modelYear">Model Year</label>
-      <input type="number" id="modelYear" formControlName="modelYear" class="form-control" [class.is-invalid]="stockForm.get('modelYear')?.invalid && stockForm.get('modelYear')?.touched"/>
-      <div *ngIf="stockForm.get('modelYear')?.invalid && stockForm.get('modelYear')?.touched" class="invalid-feedback">
-        Model year is required and must be valid.
-      </div>
+      <input type="number" id="modelYear" formControlName="modelYear" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="kms">Kilometers</label>
-      <input type="number" id="kms" formControlName="kms" class="form-control" [class.is-invalid]="stockForm.get('kms')?.invalid && stockForm.get('kms')?.touched"/>
-      <div *ngIf="stockForm.get('kms')?.invalid && stockForm.get('kms')?.touched" class="invalid-feedback">
-        Kilometers is required and must be valid.
-      </div>
+      <input type="number" id="kms" formControlName="kms" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="color">Color</label>
-      <input type="text" id="color" formControlName="color" class="form-control" [class.is-invalid]="stockForm.get('color')?.invalid && stockForm.get('color')?.touched"/>
-      <div *ngIf="stockForm.get('color')?.invalid && stockForm.get('color')?.touched" class="invalid-feedback">
-        Color is required.
-      </div>
+      <input type="text" id="color" formControlName="color" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="vin">VIN</label>
-      <input type="text" id="vin" formControlName="vin" class="form-control" [class.is-invalid]="stockForm.get('vin')?.invalid && stockForm.get('vin')?.touched"/>
-      <div *ngIf="stockForm.get('vin')?.invalid && stockForm.get('vin')?.touched" class="invalid-feedback">
-        VIN is required.
-      </div>
+      <input type="text" id="vin" formControlName="vin" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="retailPrice">Retail Price</label>
-      <input type="number" id="retailPrice" formControlName="retailPrice" class="form-control" [class.is-invalid]="stockForm.get('retailPrice')?.invalid && stockForm.get('retailPrice')?.touched"/>
-      <div *ngIf="stockForm.get('retailPrice')?.invalid && stockForm.get('retailPrice')?.touched" class="invalid-feedback">
-        Retail price is required and must be valid.
-      </div>
+      <input type="number" id="retailPrice" formControlName="retailPrice" class="form-control" />
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="costPrice">Cost Price</label>
-      <input type="number" id="costPrice" formControlName="costPrice" class="form-control" [class.is-invalid]="stockForm.get('costPrice')?.invalid && stockForm.get('costPrice')?.touched"/>
-      <div *ngIf="stockForm.get('costPrice')?.invalid && stockForm.get('costPrice')?.touched" class="invalid-feedback">
-        Cost price is required and must be valid.
-      </div>
+      <input type="number" id="costPrice" formControlName="costPrice" class="form-control" />
     </div>
 
     <!-- New Images Upload Field -->
-    <div class="form-group mb-3">
+    <div class="form-group">
       <label for="images">New Images</label>
       <input type="file" id="images" (change)="onFileChange($event)" multiple class="form-control" />
     </div>
