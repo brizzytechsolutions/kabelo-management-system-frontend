@@ -51,7 +51,7 @@
   .card {
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Adds a subtle shadow for a nicer appearance
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .card-body {
@@ -64,7 +64,7 @@
   
   .card-text {
     font-size: 0.9rem;
-    color: #6c757d; // Bootstrap's muted text color
+    color: #6c757d;
   }
   
   .existing-images .card {

@@ -33,7 +33,7 @@ export class ListStockComponent implements OnInit {
         if (data && data.items) {
           this.stocks = data.items.map(item => ({
             ...item,
-            images: item.images ? item.images.map(imagePath => `http://localhost:3000${imagePath}`) : [] // Prepend server URL
+            images: item.images ? item.images.map(imagePath => `http://localhost:3000${imagePath}`) : []
           }));
         } else {
           this.stocks = [];
@@ -79,7 +79,7 @@ export class ListStockComponent implements OnInit {
     if (confirm('Are you sure you want to delete this stock item?')) {
       this.stockService.deleteStock(id).subscribe({
         next: () => {
-          this.loadStocks(); // Refresh list after deletion
+          this.loadStocks();
           this.errorMessage = '';
         },
         error: (error) => {

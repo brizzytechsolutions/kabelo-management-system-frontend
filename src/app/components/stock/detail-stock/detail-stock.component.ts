@@ -60,17 +60,14 @@ export class DetailStockComponent implements OnInit {
           costPrice: stock.costPrice,
         });
   
-        // Log images and accessories for debugging
         console.log('Images:', stock.images);
       console.log('Accessories:', stock.accessories);
 
-      // Map image paths to full URLs
       this.existingImages = stock.images ? stock.images.map(imagePath => `http://localhost:3000${imagePath}`) : [];
       
-      // Map accessory images to full URLs
       this.accessories = stock.accessories ? stock.accessories.map(accessory => ({
         ...accessory,
-        image: `http://localhost:3000${accessory.image}` // Ensure correct image path
+        image: `http://localhost:3000${accessory.image}`
       })) : [];
         
         this.errorMessage = '';

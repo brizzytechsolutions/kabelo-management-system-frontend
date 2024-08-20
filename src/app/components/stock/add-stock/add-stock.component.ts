@@ -37,16 +37,14 @@ export class AddStockComponent {
       retailPrice: ['', [Validators.required, Validators.min(0)]], 
       costPrice: ['', [Validators.required, Validators.min(0)]],
       images: ['', Validators.required],
-      accessories: this.fb.array([]),  // Initialize accessories as a FormArray
+      accessories: this.fb.array([]),
     });
   }
 
-  // Getter for easier access to accessories FormArray
   get accessories(): FormArray {
     return this.stockForm.get('accessories') as FormArray;
   }
 
-  // Method to add a new accessory to the form
   addAccessory() {
     this.accessories.push(this.fb.group({
       name: ['', Validators.required],
@@ -55,7 +53,6 @@ export class AddStockComponent {
     }));
   }
 
-  // Method to remove an accessory from the form
   removeAccessory(index: number) {
     this.accessories.removeAt(index);
   }
@@ -104,9 +101,9 @@ export class AddStockComponent {
       this.stockService.addStock(formData).subscribe({
         next: (stock: StockItem) => {
           this.errorMessage = ''; 
-          this.stockForm.reset(); // Reset the form
+          this.stockForm.reset();
           this.stockAdded.emit();
-          this.closeModal.nativeElement.click(); // Close the modal
+          this.closeModal.nativeElement.click();
         },
         error: (error) => {
           this.errorMessage = error.message; 
