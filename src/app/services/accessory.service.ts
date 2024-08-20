@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Accessory } from '../interface/accessory.interface';
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AccessoryService {
   private apiUrl = 'http://localhost:3000/api/accessory';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  }
 
   getAccessories(page: number = 1, pageSize: number = 10): Observable<{ items: Accessory[], total: number }> {
     const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
@@ -36,10 +45,12 @@ export class AccessoryService {
     );
   }
 
-  deleteAccessory(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
-      catchError(this.handleError)
-    );
+  deleteAccessory(id: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

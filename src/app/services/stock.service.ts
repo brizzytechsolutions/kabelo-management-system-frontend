@@ -23,13 +23,12 @@ export class StockService {
       .set('search', searchTerm)
       .set('page', `${page}`)
       .set('pageSize', `${pageSize}`);
-  
+
     return this.http.get<{ items: StockItem[], total: number }>(`${this.apiUrl}`, { headers, params })
       .pipe(
         catchError(this.handleError)
       );
   }
-  
 
   getStockById(id: string): Observable<StockItem> {
     const headers = this.getAuthHeaders();

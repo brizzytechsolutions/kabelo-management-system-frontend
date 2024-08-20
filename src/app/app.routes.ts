@@ -15,5 +15,5 @@ export const routes: Routes = [
   { path: 'add-stock', component: AddStockComponent, canActivate: [authGuard] }, 
   { path: 'stock-detail/:id', component: DetailStockComponent, canActivate: [authGuard] },
   { path: 'edit-stock/:id', component: EditStockComponent, canActivate: [authGuard] },
-  // { path: '**', component: NotFoundComponent }, // Uncomment or add NotFoundComponent as needed
+  // { path: '**', component: NotFoundComponent },
 ];

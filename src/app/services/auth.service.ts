@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.getToken();
   }
 
   getToken(): string | null {
@@ -36,6 +36,15 @@ export class AuthService {
 
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
+    if (!token) {
+      this.logout();
+      throw new Error('Token is not available');
+    }
+
+    if (this.isTokenExpired(token)) {
+      this.refreshToken().subscribe();
+    }
+
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
@@ -51,7 +60,10 @@ export class AuthService {
         tap((response: any) => {
           this.saveToken(response.newToken);
         }),
-        catchError(this.handleError)
+        catchError((error) => {
+          this.logout();
+          return throwError(error);
+        })
       );
   }
 
