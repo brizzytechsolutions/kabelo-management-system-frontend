@@ -36,3 +36,38 @@
     font-size: 16px;
   }
   
+  .vehicle-image {
+    width: 500px;
+    max-height: 400px;
+    object-fit: cover;
+  }
+  
+  .accessory-image {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: none;
+  }
+  
+  .card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Adds a subtle shadow for a nicer appearance
+  }
+  
+  .card-body {
+    text-align: center;
+  }
+  
+  .card-title {
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 0.9rem;
+    color: #6c757d; // Bootstrap's muted text color
+  }
+  
+  .existing-images .card {
+    margin-bottom: 1rem;
+  }
+  

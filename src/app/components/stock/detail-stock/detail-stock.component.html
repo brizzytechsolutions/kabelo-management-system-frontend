@@ -49,10 +49,28 @@
       <div class="col-md-6">
         <div class="existing-images">
           <div *ngFor="let image of existingImages" class="img-thumbnail">
-            <img [src]="image" alt="Vehicle image" class="img-fluid mb-2" style="max-width: 100%; max-height: 200px; object-fit: cover;" />
+            <img [src]="image" alt="Vehicle image" class="vehicle-image img-fluid mb-2" />
           </div>
         </div>
-      </div>      
+      </div>
+    </div>
+    <h4 class="text-center">Accessories</h4>
+    <div *ngIf="accessories.length > 0" class="row">
+      <div *ngFor="let accessory of accessories" class="col-md-6 mb-3">
+        <div class="card">
+          <!-- Use the image path directly from the TypeScript file -->
+          <img [src]="accessory.image" class="card-img-top accessory-image" alt="Accessory image">
+          <div class="card-body">
+            <h5 class="card-title">{{ accessory.name }}</h5>
+            <p class="card-text">{{ accessory.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="accessories.length === 0" class="text-center">
+      <p>No accessories available.</p>
+    </div>
+    
 
     <div class="text-center">
       <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Stock List</button>

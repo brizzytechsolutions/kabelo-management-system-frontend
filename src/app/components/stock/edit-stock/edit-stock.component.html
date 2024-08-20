@@ -9,10 +9,8 @@
     <!-- Existing Images at the Top -->
     <div class="existing-images mb-4">
       <div *ngFor="let image of existingImages" class="img-thumbnail">
-        <img [src]="image" alt="Vehicle image" class="img-fluid" />
-        <div class="d-grid gap-2">
-          <button type="button" class="btn btn-danger mt-2" (click)="deleteImage(image)">Delete</button>
-        </div>
+        <img [src]="image" alt="Vehicle image" />
+        <button type="button" class="btn btn-danger" (click)="deleteImage(image)">Delete</button>
       </div>
     </div>
 
@@ -59,11 +57,37 @@
       <label for="images">New Images</label>
       <input type="file" id="images" (change)="onFileChange($event)" multiple class="form-control" />
     </div>
-<hr>
+
+    <!-- Accessories Management Section -->
+    <div formArrayName="accessories">
+      <h4>Accessories</h4>
+      <div *ngFor="let accessory of accessories.controls; let i = index" [formGroupName]="i" class="accessory-item">
+        <div class="form-group">
+          <label for="accessoryName">Accessory Name</label>
+          <input type="text" id="accessoryName" formControlName="name" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="accessoryDescription">Description</label>
+          <input type="text" id="accessoryDescription" formControlName="description" class="form-control" />
+        </div>
+        <div *ngIf="accessory.get('existingImage')?.value">
+          <img [src]="'http://localhost:3000' + accessory.get('existingImage')?.value" alt="Accessory image" class="img-thumbnail" />
+        </div>
+        <div class="form-group">
+          <label for="accessoryImage">New Image</label>
+          <input type="file" id="accessoryImage" (change)="onAccessoryFileChange($event, i)" class="form-control" />
+        </div>
+<!-- Save Accessory Button -->
+<button type="button" class="btn btn-primary" (click)="saveAccessory(i)" *ngIf="accessory.dirty || !accessory.pristine">Save Accessory</button>
+        <button type="button" class="btn btn-danger" (click)="removeAccessory(i)">Remove Accessory</button>
+      </div>
+      <button type="button" class="btn btn-secondary" (click)="addAccessory()">Add Accessory</button>
+    </div>
+  <hr>
     <!-- Action Buttons -->
     <div class="link-buttons text-center">
-      <button class="btn btn-secondary mb-3 mr-2" (click)="goBack()">Back to Stock List</button>
-      <button type="submit" class="btn btn-primary mb-3" [disabled]="stockForm.invalid">Update Stock</button>
+      <button class="btn btn-info" (click)="goBack()">Back to Stock List</button>
+      <button type="submit" class="btn btn-primary" [disabled]="stockForm.invalid">Update Stock</button>
     </div>
   </form>
 </div>

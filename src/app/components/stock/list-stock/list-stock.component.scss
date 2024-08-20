@@ -3,7 +3,11 @@
 }
 
 .btn {
-  width: 120px; /* Ensures uniform button size */
+  width: 100px; /* Ensures uniform button size */
+}
+
+.btn-success {
+  width: 120px;
 }
 
 .container {
@@ -12,4 +16,8 @@
 
 .pagination {
   margin-top: 20px;
+}
+
+.card {
+  max-width: 100%; /* Ensure card width is responsive */
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StockService } from '../../../services/stock.service';
 import { CommonModule } from '@angular/common';
 import { StockItem } from '../../../interface/stock.interface';
+import { Accessory } from '../../../interface/accessory.interface';
 
 @Component({
   selector: 'app-detail-stock',
@@ -16,6 +17,7 @@ export class DetailStockComponent implements OnInit {
   stockForm: FormGroup;
   stockId: string;
   existingImages: string[] = [];
+  accessories: Accessory[] = [];
   errorMessage: string = ''; 
 
   constructor(
@@ -57,7 +59,20 @@ export class DetailStockComponent implements OnInit {
           retailPrice: stock.retailPrice,
           costPrice: stock.costPrice,
         });
-        this.existingImages = stock.images ? stock.images.map(imagePath => `http://localhost:3000${imagePath}`) : [];
+  
+        // Log images and accessories for debugging
+        console.log('Images:', stock.images);
+      console.log('Accessories:', stock.accessories);
+
+      // Map image paths to full URLs
+      this.existingImages = stock.images ? stock.images.map(imagePath => `http://localhost:3000${imagePath}`) : [];
+      
+      // Map accessory images to full URLs
+      this.accessories = stock.accessories ? stock.accessories.map(accessory => ({
+        ...accessory,
+        image: `http://localhost:3000${accessory.image}` // Ensure correct image path
+      })) : [];
+        
         this.errorMessage = '';
       },
       error: (error) => {

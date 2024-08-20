@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { StockService } from '../../../services/stock.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StockItem } from '../../../interface/stock.interface';
+import { Accessory } from '../../../interface/accessory.interface';
+
 
 @Component({
   selector: 'app-add-stock',
@@ -17,10 +19,13 @@ export class AddStockComponent {
   errorMessage: string = '';
 
   @Output() stockAdded = new EventEmitter<void>();
-
   @ViewChild('closeModal') closeModal!: ElementRef;
 
-  constructor(private fb: FormBuilder, private stockService: StockService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private stockService: StockService,
+    private router: Router
+  ) {
     this.stockForm = this.fb.group({
       regNo: ['', Validators.required],
       make: ['', Validators.required],
@@ -32,7 +37,43 @@ export class AddStockComponent {
       retailPrice: ['', [Validators.required, Validators.min(0)]], 
       costPrice: ['', [Validators.required, Validators.min(0)]],
       images: ['', Validators.required],
-    });    
+      accessories: this.fb.array([]),  // Initialize accessories as a FormArray
+    });
+  }
+
+  // Getter for easier access to accessories FormArray
+  get accessories(): FormArray {
+    return this.stockForm.get('accessories') as FormArray;
+  }
+
+  // Method to add a new accessory to the form
+  addAccessory() {
+    this.accessories.push(this.fb.group({
+      name: ['', Validators.required],
+      description: [''],
+      image: ['', Validators.required]
+    }));
+  }
+
+  // Method to remove an accessory from the form
+  removeAccessory(index: number) {
+    this.accessories.removeAt(index);
+  }
+
+  onFileChange(event: any) {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      this.stockForm.patchValue({ images: files });
+      this.stockForm.get('images')?.updateValueAndValidity();
+    }
+  }
+
+  onAccessoryFileChange(event: any, index: number) {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      this.accessories.at(index).patchValue({ image: files[0] });
+      this.accessories.at(index).get('image')?.updateValueAndValidity();
+    }
   }
 
   onSubmit() {
@@ -46,11 +87,20 @@ export class AddStockComponent {
               formData.append('images', files[i]);
             }
           }
+        } else if (key === 'accessories') {
+          const accessories = this.stockForm.get(key)?.value;
+          accessories.forEach((accessory: any, index: number) => {
+            formData.append(`accessories[${index}][name]`, accessory.name);
+            formData.append(`accessories[${index}][description]`, accessory.description);
+            if (accessory.image) {
+              formData.append(`accessories[${index}][image]`, accessory.image);
+            }
+          });
         } else {
           formData.append(key, this.stockForm.get(key)?.value);
         }
       });
-  
+
       this.stockService.addStock(formData).subscribe({
         next: (stock: StockItem) => {
           this.errorMessage = ''; 
@@ -65,14 +115,8 @@ export class AddStockComponent {
           console.info('Stock addition completed'); 
         }
       });
-    }
-  }  
-
-  onFileChange(event: any) {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      this.stockForm.patchValue({ images: files });
-      this.stockForm.get('images')?.updateValueAndValidity();
+    } else {
+      this.errorMessage = 'Please fill in all required fields correctly.';
     }
   }
 }
